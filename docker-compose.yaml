@@ -1,9 +1,16 @@
 version: '3.8'
-
 services:
-  app:
-    build:
-      context: .
-      target: development
+  postgres:
+    image: postgres:14.2-alpine
+    container_name: servo-postgres
+    restart: always
     ports:
-      - 3000:3000
+      - 5432:5432
+    env_file:
+      - .env
+    volumes:
+      - postgres:/var/lib/postgresql/data
+
+volumes:
+  postgres:
+    name: servo-db

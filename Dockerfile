@@ -1,6 +1,13 @@
-FROM node:17.4.0-alpine3.14 as development
+FROM node:17 as development
+
 WORKDIR /
+
 COPY package*.json ./
-RUN npm install --only=development
+COPY prisma ./prisma
+RUN yarn install --only=development
+
 COPY . .
-CMD npm start
+RUN yarn prisma generate
+
+EXPOSE 3000
+CMD yarn start
