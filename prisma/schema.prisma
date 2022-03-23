@@ -7,6 +7,13 @@ generator client {
   provider = "prisma-client-js"
 }
 
+generator nestgraphql {
+  provider               = "node node_modules/prisma-nestjs-graphql"
+  output                 = "../src/@generated/graphql"
+  fields_Validator_from  = "class-validator"
+  fields_Validator_input = true
+}
+
 model User {
   id       Int    @id @default(autoincrement())
   username String
