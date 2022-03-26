@@ -7,11 +7,13 @@ import {
   ResolveField,
   Resolver,
 } from '@nestjs/graphql';
+
 import { UserCreateInput } from 'src/@generated/graphql/user/user-create.input';
 import { User } from 'src/@generated/graphql/user/user.model';
 import { AuthService } from 'src/auth/auth.service';
 import { JwtAuthGuard } from 'src/auth/guards/jwt-auth.guard';
 import { CurrentUser } from 'src/decorators';
+
 import { UserSession, UserSigninInput } from './models';
 import { UserService } from './user.service';
 
@@ -45,7 +47,7 @@ export class UserResolver {
     return user;
   }
 
-  @Mutation(() => User)
+  @Mutation(() => User, { description: 'User Registration' })
   async signupUser(@Args('data') data: UserCreateInput) {
     return this.userService.create(data);
   }

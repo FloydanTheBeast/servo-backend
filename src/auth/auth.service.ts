@@ -3,6 +3,7 @@ import { ConfigService } from '@nestjs/config';
 import { JwtService } from '@nestjs/jwt';
 import { User } from '@prisma/client';
 import ms from 'ms';
+
 import { AuthSessionPayload } from './types';
 
 @Injectable()
