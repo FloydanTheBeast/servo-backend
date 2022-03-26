@@ -48,8 +48,12 @@ export class UserResolver {
   }
 
   @Mutation(() => User, { description: 'User Registration' })
-  async signupUser(@Args('data') data: UserCreateInput) {
-    return this.userService.create(data);
+  async signupUser(@Args('data') data: UserCreateInput, @Context() context) {
+    const user = await this.userService.create(data);
+
+    context.session = await this.authService.createSession(user);
+
+    return user;
   }
 
   @ResolveField(() => UserSession)
