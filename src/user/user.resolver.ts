@@ -34,14 +34,6 @@ export class UserResolver {
   @Mutation(() => User, { description: 'User Authentication' })
   async signinUser(@Args('data') data: UserSigninInput, @Context() context) {
     const user = await this.userService.findByCredentials(data);
-
-    if (!user) {
-      throw new HttpException(
-        { error: 'Wrong credentials' },
-        HttpStatus.BAD_REQUEST,
-      );
-    }
-
     context.session = await this.authService.createSession(user);
 
     return user;
@@ -50,7 +42,6 @@ export class UserResolver {
   @Mutation(() => User, { description: 'User Registration' })
   async signupUser(@Args('data') data: UserCreateInput, @Context() context) {
     const user = await this.userService.create(data);
-
     context.session = await this.authService.createSession(user);
 
     return user;
