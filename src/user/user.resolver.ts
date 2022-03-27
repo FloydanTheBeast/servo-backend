@@ -1,4 +1,4 @@
-import { HttpException, HttpStatus, UseGuards } from '@nestjs/common';
+import { UseGuards } from '@nestjs/common';
 import {
   Args,
   Context,
@@ -12,6 +12,7 @@ import { UserCreateInput } from 'src/@generated/graphql/user/user-create.input';
 import { User } from 'src/@generated/graphql/user/user.model';
 import { AuthService } from 'src/auth/auth.service';
 import { JwtAuthGuard } from 'src/auth/guards/jwt-auth.guard';
+import { AuthSessionPayload } from 'src/auth/types';
 import { CurrentUser } from 'src/decorators';
 
 import { UserSession, UserSigninInput } from './models';
@@ -26,9 +27,8 @@ export class UserResolver {
 
   @Query(() => User)
   @UseGuards(JwtAuthGuard)
-  async user(@CurrentUser() user: User) {
-    console.log(user);
-    return user;
+  async user(@CurrentUser() { id: userId }: AuthSessionPayload) {
+    return this.userService.getUserById(userId);
   }
 
   @Mutation(() => User, { description: 'User Authentication' })

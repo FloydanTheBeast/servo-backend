@@ -10,6 +10,10 @@ import { UserSigninInput } from './models';
 export class UserService {
   constructor(private readonly prismaService: PrismaService) {}
 
+  async getUserById(id: number) {
+    return this.prismaService.user.findUnique({ where: { id } });
+  }
+
   async create(data: Prisma.UserCreateInput) {
     const hashedPassword = await bcrypt.hash(data.password, 10);
 
