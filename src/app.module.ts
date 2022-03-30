@@ -13,6 +13,8 @@ import { HttpExceptionFilter } from './exceptions';
 import { UserModule } from './user/user.module';
 import { HttpPlugin } from './utils';
 
+const IS_PRODUCTION = process.env.NODE_ENV === 'production';
+
 @Module({
   imports: [
     ConfigModule.forRoot({
@@ -27,7 +29,7 @@ import { HttpPlugin } from './utils';
       plugins: [ApolloServerPluginLandingPageLocalDefault(), new HttpPlugin()],
       installSubscriptionHandlers: true,
       autoSchemaFile: true,
-      introspection: process.env.NODE_ENV !== 'production',
+      introspection: true,
     }),
     UserModule,
     AuthModule,

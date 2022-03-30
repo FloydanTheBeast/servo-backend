@@ -33,18 +33,24 @@ export class UserService {
           HttpStatus.BAD_REQUEST,
         );
       }
+
+      throw err;
     }
   }
 
   async findByCredentials({ email, password }: UserSigninInput): Promise<User> {
-    const user = await this.prismaService.user.findUnique({ where: { email } });
+    try {
+      const user = await this.prismaService.user.findUnique({
+        where: { email },
+      });
 
-    if (!user || !(await bcrypt.compare(password, user.password))) {
-      if (!user) {
+      if (!(await bcrypt.compare(password, user.password))) {
         throw new HttpException('Wrong credentials', HttpStatus.BAD_REQUEST);
       }
-    }
 
-    return user;
+      return user;
+    } catch (err) {
+      throw new HttpException('Wrong credentials', HttpStatus.BAD_REQUEST);
+    }
   }
 }

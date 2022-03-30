@@ -7,4 +7,10 @@ export class UserSession {
 
   @Field(() => Number, { nullable: false })
   accessTokenExpiresIn: number;
+
+  @Field(() => String, { nullable: false })
+  refreshToken: string;
+
+  @Field(() => Number, { nullable: false })
+  refreshTokenExpiresIn: number;
 }

@@ -31,7 +31,7 @@ export class UserResolver {
     return this.userService.getUserById(userId);
   }
 
-  @Mutation(() => User, { description: 'User Authentication' })
+  @Mutation(() => User, { description: 'User authentication' })
   async signinUser(@Args('data') data: UserSigninInput, @Context() context) {
     const user = await this.userService.findByCredentials(data);
     context.session = await this.authService.createSession(user);
@@ -39,9 +39,15 @@ export class UserResolver {
     return user;
   }
 
-  @Mutation(() => User, { description: 'User Registration' })
+  @Mutation(() => UserSession, { description: 'Refresh user session' })
+  async refreshSession(@Args('refreshToken') refreshToken: string) {
+    return await this.authService.refreshSession(refreshToken);
+  }
+
+  @Mutation(() => User, { description: 'User registration' })
   async signupUser(@Args('data') data: UserCreateInput, @Context() context) {
     const user = await this.userService.create(data);
+    console.log(user);
     context.session = await this.authService.createSession(user);
 
     return user;
