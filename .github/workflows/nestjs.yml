@@ -1,4 +1,4 @@
-name: Nest.js backend application CI
+name: Nest.js backend application CD
 
 on:
   push:
@@ -22,6 +22,8 @@ jobs:
       with: 
         host: ${{ secrets.VM_HOST }}
         username: ${{ secrets.VM_USERNAME }}
+        key: ${{ secrets.SSH_KEY }}
+        passphrase: ${{ secrets.SSH_PASSPHRASE }}
         script: |
           cd /var/www/servo.rocks/
           git pull origin dev
