@@ -2,6 +2,7 @@ import { Field } from '@nestjs/graphql';
 import { ObjectType } from '@nestjs/graphql';
 import { ID } from '@nestjs/graphql';
 import { HideField } from '@nestjs/graphql';
+import { UserRecord } from '../user-record/user-record.model';
 
 @ObjectType()
 export class User {
@@ -25,6 +26,9 @@ export class User {
 
   @Field(() => Date, { nullable: true })
   birthDate!: Date | null;
+
+  @HideField()
+  records?: UserRecord | null;
 
   @Field(() => Date, { nullable: false })
   createdAt!: Date;

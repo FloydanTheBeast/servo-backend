@@ -3,6 +3,8 @@ import { InputType } from '@nestjs/graphql';
 import { IntFilter } from '../prisma/int-filter.input';
 import { StringFilter } from '../prisma/string-filter.input';
 import { DateTimeNullableFilter } from '../prisma/date-time-nullable-filter.input';
+import { UserRecordRelationFilter } from '../user-record/user-record-relation-filter.input';
+import { HideField } from '@nestjs/graphql';
 import { DateTimeFilter } from '../prisma/date-time-filter.input';
 
 @InputType()
@@ -36,6 +38,9 @@ export class UserWhereInput {
 
   @Field(() => DateTimeNullableFilter, { nullable: true })
   birthDate?: DateTimeNullableFilter;
+
+  @HideField()
+  records?: UserRecordRelationFilter;
 
   @Field(() => DateTimeFilter, { nullable: true })
   createdAt?: DateTimeFilter;

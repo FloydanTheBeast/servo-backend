@@ -6,14 +6,6 @@ on:
       - main
 
 jobs:
-  # test:
-  #   runs-on: ubuntu-latest
-  #   steps:
-  #   - uses: actions/checkout@v3
-  #   - name: Setup Node.js environment
-  #     uses: actions/setup-node@v3.1.0
-  #     with:
-  #       node-version: 16.14.2
   deploy:
     runs-on: ubuntu-latest
     steps: 
@@ -28,5 +20,7 @@ jobs:
           cd /var/www/servo.rocks/
           git pull origin dev
           yarn install --production
+          yarn prisma generate
+          yarn prisma migrate dev
           pm2 restart servo-backend
       
