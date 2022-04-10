@@ -19,8 +19,8 @@ jobs:
         script: |
           cd /var/www/servo.rocks/
           git pull origin dev
-          yarn install --production
-          yarn prisma generate
+          yarn install
           yarn prisma migrate dev
+          yarn build
           pm2 restart servo-backend
       
