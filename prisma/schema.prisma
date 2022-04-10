@@ -15,14 +15,43 @@ generator nestgraphql {
 }
 
 model User {
-  id        Int       @id @default(autoincrement())
-  email     String    @unique
-  username  String    @unique
+  id        Int         @id @default(autoincrement())
+  email     String      @unique
+  username  String      @unique
   /// @HideField({ output: true })
   password  String
   firstName String
   lastName  String
   birthDate DateTime?
-  createdAt DateTime  @default(now())
-  updatedAt DateTime  @default(now()) @updatedAt
+  /// @HideField({ input:true, output: true })
+  records   UserRecord?
+  createdAt DateTime    @default(now())
+  updatedAt DateTime    @default(now()) @updatedAt
+}
+
+model UserRecord {
+  id               String            @id @default(uuid())
+  user             User              @relation(fields: [userId], references: [id])
+  userId           Int               @unique
+  financialRecords FinancialRecord[]
+  createdAt        DateTime          @default(now())
+  updatedAt        DateTime          @default(now()) @updatedAt
+}
+
+enum FinancialOperation {
+  LOAN
+  DEBT
+}
+
+model FinancialRecord {
+  id            String             @id @default(uuid())
+  type          FinancialOperation
+  title         String
+  description   String?
+  amount        Float
+  date          DateTime?
+  userRecords   UserRecord?        @relation(fields: [userRecordsId], references: [id])
+  userRecordsId String?
+  createdAt     DateTime           @default(now())
+  updatedAt     DateTime           @default(now()) @updatedAt
 }
