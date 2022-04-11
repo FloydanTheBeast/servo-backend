@@ -4,14 +4,13 @@ import { Args, Resolver, Query, Mutation } from '@nestjs/graphql';
 import { FinancialRecordCreateInput } from 'src/@generated/graphql/financial-record/financial-record-create.input';
 import { FinancialRecordUpdateInput } from 'src/@generated/graphql/financial-record/financial-record-update.input';
 import { FinancialRecord } from 'src/@generated/graphql/financial-record/financial-record.model';
-import { UserRecord } from 'src/@generated/graphql/user-record/user-record.model';
 import { JwtAuthGuard } from 'src/auth/guards/jwt-auth.guard';
 import { AuthSessionPayload } from 'src/auth/types';
 import { CurrentUser } from 'src/decorators';
 
 import { FinancialRecordService } from './financial-record.service';
 
-@Resolver(() => UserRecord)
+@Resolver(() => FinancialRecord)
 export class FinancialRecordResolver {
   constructor(
     private readonly financialRecordService: FinancialRecordService,

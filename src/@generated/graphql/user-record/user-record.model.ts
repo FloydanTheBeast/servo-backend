@@ -4,6 +4,7 @@ import { ID } from '@nestjs/graphql';
 import { User } from '../user/user.model';
 import { Int } from '@nestjs/graphql';
 import { FinancialRecord } from '../financial-record/financial-record.model';
+import { EmotionalStateRecord } from '../emotional-state-record/emotional-state-record.model';
 import { UserRecordCount } from '../user/user-record-count.output';
 
 @ObjectType()
@@ -19,6 +20,9 @@ export class UserRecord {
 
   @Field(() => [FinancialRecord], { nullable: true })
   financialRecords?: Array<FinancialRecord>;
+
+  @Field(() => [EmotionalStateRecord], { nullable: true })
+  emotionalRecords?: Array<EmotionalStateRecord>;
 
   @Field(() => Date, { nullable: false })
   createdAt!: Date;

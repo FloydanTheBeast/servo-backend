@@ -1,6 +1,7 @@
 import { Field } from '@nestjs/graphql';
 import { InputType } from '@nestjs/graphql';
 import { FinancialRecordUncheckedCreateNestedManyWithoutUserRecordsInput } from '../financial-record/financial-record-unchecked-create-nested-many-without-user-records.input';
+import { EmotionalStateRecordUncheckedCreateNestedManyWithoutUserRecordsInput } from '../emotional-state-record/emotional-state-record-unchecked-create-nested-many-without-user-records.input';
 
 @InputType()
 export class UserRecordUncheckedCreateWithoutUserInput {
@@ -12,6 +13,12 @@ export class UserRecordUncheckedCreateWithoutUserInput {
     { nullable: true },
   )
   financialRecords?: FinancialRecordUncheckedCreateNestedManyWithoutUserRecordsInput;
+
+  @Field(
+    () => EmotionalStateRecordUncheckedCreateNestedManyWithoutUserRecordsInput,
+    { nullable: true },
+  )
+  emotionalRecords?: EmotionalStateRecordUncheckedCreateNestedManyWithoutUserRecordsInput;
 
   @Field(() => Date, { nullable: true })
   createdAt?: Date | string;
