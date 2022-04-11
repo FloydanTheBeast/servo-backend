@@ -14,6 +14,7 @@ export class RecordService {
       where: { userId },
       include: {
         financialRecords: true,
+        emotionalRecords: true,
       },
     });
   }
