@@ -7,6 +7,9 @@ docker.env
 /node_modules
 .yarn
 
+# Generated code
+/src/@generated/**
+
 # Logs
 logs
 *.log
