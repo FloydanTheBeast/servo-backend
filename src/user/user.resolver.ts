@@ -17,6 +17,7 @@ import { CurrentUser } from 'src/decorators';
 
 import { UserSession, UserSigninInput } from './models';
 import { UserService } from './user.service';
+import { UserSchema } from './validation';
 
 @Resolver(() => User)
 export class UserResolver {
@@ -33,6 +34,8 @@ export class UserResolver {
 
   @Mutation(() => User, { description: 'User registration' })
   async signupUser(@Args('data') data: UserCreateInput, @Context() context) {
+    await UserSchema.validateAsync(data);
+
     const user = await this.userService.create(data);
     context.session = await this.authService.createSession(user);
 

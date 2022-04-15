@@ -9,6 +9,7 @@ import { AuthSessionPayload } from 'src/auth/types';
 import { CurrentUser } from 'src/decorators';
 
 import { StepsActivityRecordService } from './steps-activity-record.service';
+import { StepsActivitySchema } from './validation';
 
 @Resolver(() => StepsActivityRecord)
 export class StepsActivityRecordResolver {
@@ -32,6 +33,8 @@ export class StepsActivityRecordResolver {
     @CurrentUser() { id: userId }: AuthSessionPayload,
     @Args('data') data: StepsActivityRecordCreateInput,
   ) {
+    await StepsActivitySchema.validateAsync(data);
+
     return await this.stepsActivityRecordService.createStepsActivityRecord(
       userId,
       data,
@@ -44,6 +47,8 @@ export class StepsActivityRecordResolver {
     @Args('id') id: string,
     @Args('data') data: StepsActivityRecordUpdateInput,
   ) {
+    await StepsActivitySchema.validateAsync(data);
+
     return await this.stepsActivityRecordService.updateStepsActivityRecord(
       id,
       data,
