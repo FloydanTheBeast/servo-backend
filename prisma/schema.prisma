@@ -30,13 +30,14 @@ model User {
 }
 
 model UserRecord {
-  id               String                 @id @default(uuid())
-  user             User                   @relation(fields: [userId], references: [id])
-  userId           Int                    @unique
-  financialRecords FinancialRecord[]
-  emotionalRecords EmotionalStateRecord[]
-  createdAt        DateTime               @default(now())
-  updatedAt        DateTime               @default(now()) @updatedAt
+  id                   String                 @id @default(uuid())
+  user                 User                   @relation(fields: [userId], references: [id])
+  userId               Int                    @unique
+  financialRecords     FinancialRecord[]
+  emotionalRecords     EmotionalStateRecord[]
+  stepsActivityRecords StepsActivityRecord[]
+  createdAt            DateTime               @default(now())
+  updatedAt            DateTime               @default(now()) @updatedAt
 }
 
 enum FinancialOperation {
@@ -72,4 +73,14 @@ model EmotionalStateRecord {
   userRecordsId String?
   createdAt     DateTime       @default(now())
   updatedAt     DateTime       @default(now()) @updatedAt
+}
+
+model StepsActivityRecord {
+  id            String      @id @default(uuid())
+  stepsCount    Int
+  date          DateTime
+  userRecords   UserRecord? @relation(fields: [userRecordsId], references: [id])
+  userRecordsId String?
+  createdAt     DateTime    @default(now())
+  updatedAt     DateTime    @default(now()) @updatedAt
 }
