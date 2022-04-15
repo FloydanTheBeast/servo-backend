@@ -18,7 +18,7 @@ jobs:
         passphrase: ${{ secrets.SSH_PASSPHRASE }}
         script: |
           cd /var/www/servo.rocks/
-          git pull origin dev
+          git pull origin main
           yarn install
           yarn prisma migrate dev
           yarn build
