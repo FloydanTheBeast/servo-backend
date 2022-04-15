@@ -9,6 +9,7 @@ import { AuthSessionPayload } from 'src/auth/types';
 import { CurrentUser } from 'src/decorators';
 
 import { FinancialRecordService } from './financial-record.service';
+import { FinancialRecordSchema } from './validation';
 
 @Resolver(() => FinancialRecord)
 export class FinancialRecordResolver {
@@ -28,6 +29,8 @@ export class FinancialRecordResolver {
     @CurrentUser() { id: userId }: AuthSessionPayload,
     @Args('data') data: FinancialRecordCreateInput,
   ) {
+    await FinancialRecordSchema.validateAsync(data);
+
     return await this.financialRecordService.createFinancialRecord(
       userId,
       data,
@@ -40,6 +43,8 @@ export class FinancialRecordResolver {
     @Args('id') id: string,
     @Args('data') data: FinancialRecordUpdateInput,
   ) {
+    await FinancialRecordSchema.validateAsync(data);
+
     return await this.financialRecordService.updateFinancialRecord(id, data);
   }
 

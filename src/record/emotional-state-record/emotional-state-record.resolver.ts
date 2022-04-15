@@ -9,6 +9,7 @@ import { AuthSessionPayload } from 'src/auth/types';
 import { CurrentUser } from 'src/decorators';
 
 import { EmotionalStateRecordService } from './emotional-state-record.service';
+import { EmotionalStateRecordSchema } from './validation';
 
 @Resolver(() => EmotionalStateRecord)
 export class EmotionalStateRecordResolver {
@@ -32,6 +33,8 @@ export class EmotionalStateRecordResolver {
     @CurrentUser() { id: userId }: AuthSessionPayload,
     @Args('data') data: EmotionalStateRecordCreateInput,
   ) {
+    await EmotionalStateRecordSchema.validateAsync(data);
+
     return await this.emotionalStateRecordService.createEmotionalStateRecord(
       userId,
       data,
@@ -44,6 +47,8 @@ export class EmotionalStateRecordResolver {
     @Args('id') id: string,
     @Args('data') data: EmotionalStateRecordUpdateInput,
   ) {
+    await EmotionalStateRecordSchema.validateAsync(data);
+
     return await this.emotionalStateRecordService.updateEmotionalStateRecord(
       id,
       data,

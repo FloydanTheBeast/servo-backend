@@ -31,6 +31,11 @@ const IS_PRODUCTION = process.env.NODE_ENV === 'production';
       installSubscriptionHandlers: true,
       autoSchemaFile: true,
       introspection: true,
+      cors: {
+        origin: '*',
+        methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
+        allowedHeaders: 'Content-Type, Accept',
+      },
     }),
     UserModule,
     AuthModule,

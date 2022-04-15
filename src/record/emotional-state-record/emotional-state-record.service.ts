@@ -2,7 +2,6 @@ import { Injectable } from '@nestjs/common';
 import { PrismaService } from 'nestjs-prisma';
 
 import { EmotionalStateRecordCreateInput } from 'src/@generated/graphql/emotional-state-record/emotional-state-record-create.input';
-import { EmotionalStateRecordUpdateWithWhereUniqueWithoutUserRecordsInput } from 'src/@generated/graphql/emotional-state-record/emotional-state-record-update-with-where-unique-without-user-records.input';
 import { EmotionalStateRecordUpdateInput } from 'src/@generated/graphql/emotional-state-record/emotional-state-record-update.input';
 
 @Injectable()
