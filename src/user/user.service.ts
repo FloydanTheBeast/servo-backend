@@ -38,10 +38,21 @@ export class UserService {
     }
   }
 
-  async findByCredentials({ email, password }: UserSigninInput): Promise<User> {
+  async findByCredentials({
+    email,
+    username,
+    password,
+  }: UserSigninInput): Promise<User> {
+    if (!email && !username) {
+      throw new HttpException(
+        'Either email or username must be provided',
+        HttpStatus.BAD_REQUEST,
+      );
+    }
+
     try {
-      const user = await this.prismaService.user.findUnique({
-        where: { email },
+      const user = await this.prismaService.user.findFirst({
+        where: { OR: { email, username } },
       });
 
       if (!(await bcrypt.compare(password, user.password))) {

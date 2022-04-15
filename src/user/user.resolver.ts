@@ -25,19 +25,18 @@ export class UserResolver {
     private readonly authService: AuthService,
   ) {}
 
-  @Mutation(() => User, { description: 'User registration' })
-  async signupUser(@Args('data') data: UserCreateInput, @Context() context) {
-    const user = await this.userService.create(data);
-    console.log(user);
-    context.session = await this.authService.createSession(user);
-
-    return user;
-  }
-
   @Query(() => User)
   @UseGuards(JwtAuthGuard)
   async user(@CurrentUser() { id: userId }: AuthSessionPayload) {
     return this.userService.getUserById(userId);
+  }
+
+  @Mutation(() => User, { description: 'User registration' })
+  async signupUser(@Args('data') data: UserCreateInput, @Context() context) {
+    const user = await this.userService.create(data);
+    context.session = await this.authService.createSession(user);
+
+    return user;
   }
 
   @Mutation(() => User, { description: 'User authentication' })
