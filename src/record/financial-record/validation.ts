@@ -5,4 +5,4 @@ export const FinancialRecordSchema = Joi.object({
   description: Joi.string().max(100),
   amount: Joi.number().required().positive(),
   date: Joi.date().less('now'),
-});
+}).options({ allowUnknown: true });
